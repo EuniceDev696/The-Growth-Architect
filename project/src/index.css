@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  font-size: 17px;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-body;
+  font-family: "Manrope", "Segoe UI", Tahoma, sans-serif;
+  overflow-x: hidden;
+  line-height: 1.6;
+  color: #0f172a;
+  cursor: default;
+  caret-color: transparent;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Sora", "Manrope", "Segoe UI", sans-serif;
+  letter-spacing: -0.015em;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 600ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .animate-fade-up {
+    animation: none;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+a,
+button,
+[role="button"],
+input[type="checkbox"],
+input[type="radio"],
+select {
+  cursor: pointer;
+}
+
+input,
+textarea,
+[contenteditable="true"] {
+  caret-color: auto;
+}

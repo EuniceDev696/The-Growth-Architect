@@ -1,0 +1,18 @@
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import App from './App'
+import './index.css'
+import { AuthProvider } from "./context/AuthContext"
+import { BrowserRouter } from 'react-router-dom'
+
+if (typeof window !== "undefined") {
+  window.dataLayer = window.dataLayer || [];
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <BrowserRouter>
+    <AuthProvider>
+      <App />
+    </AuthProvider>
+  </BrowserRouter>
+)

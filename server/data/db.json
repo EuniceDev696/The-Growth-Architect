@@ -1,0 +1,47 @@
+{
+  "settings": {
+    "businessName": "The Growth Architect",
+    "adminEmail": "admin@test.com",
+    "adminPassword": "123456",
+    "supportEmail": "support@growtharchitect.com",
+    "timezone": "America/New_York",
+    "notifications": {
+      "email": true,
+      "bookings": true,
+      "messages": true,
+      "reminders": false
+    },
+    "branding": {
+      "primaryColor": "#4f46e5",
+      "accentColor": "#14b8a6"
+    }
+  },
+  "programs": [
+    {
+      "id": 1,
+      "name": "Executive Leadership",
+      "type": "Coaching",
+      "price": 500000
+    },
+    {
+      "id": 2,
+      "name": "Business Scale",
+      "type": "Consulting",
+      "price": 1200000
+    },
+    {
+      "id": 3,
+      "name": "Strategic Planning",
+      "type": "Workshop",
+      "price": 35000
+    }
+  ],
+  "users": [],
+  "bookings": [],
+  "client_bookings": [],
+  "sessions": [],
+  "allMessages": [],
+  "clientGoals": [],
+  "clientActions": [],
+  "clientActivity": []
+}

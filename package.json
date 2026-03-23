@@ -1,0 +1,13 @@
+{
+  "name": "growth-architect-deploy",
+  "private": true,
+  "scripts": {
+    "build": "npm --prefix server install && npm --prefix project install && npm --prefix project run build",
+    "start": "npm --prefix server start",
+    "dev:client": "npm --prefix project run dev",
+    "dev:server": "npm --prefix server run dev"
+  },
+  "dependencies": {
+    "react-icons": "^5.5.0"
+  }
+}

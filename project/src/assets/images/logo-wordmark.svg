@@ -1,0 +1,20 @@
+<svg width="520" height="120" viewBox="0 0 520 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="ga-accent" x1="12" y1="10" x2="104" y2="108" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D9488"/>
+      <stop offset="1" stop-color="#1D4ED8"/>
+    </linearGradient>
+  </defs>
+  <rect x="6" y="6" width="104" height="104" rx="22" fill="#F8FAFC"/>
+  <path d="M24 81L46 52L61 69L82 39" stroke="url(#ga-accent)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M73 39H82V48" stroke="url(#ga-accent)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="24" y="83" width="58" height="8" rx="4" fill="#0F172A" fill-opacity="0.12"/>
+
+  <text x="132" y="51" fill="#0F172A" font-size="24" font-weight="700" font-family="Manrope, 'Segoe UI', Arial, sans-serif" letter-spacing="0.6">
+    THE GROWTH
+  </text>
+  <text x="132" y="85" fill="#0F172A" font-size="34" font-weight="800" font-family="Manrope, 'Segoe UI', Arial, sans-serif" letter-spacing="0.4">
+    ARCHITECT
+  </text>
+  <circle cx="501" cy="22" r="7" fill="#0D9488"/>
+</svg>
