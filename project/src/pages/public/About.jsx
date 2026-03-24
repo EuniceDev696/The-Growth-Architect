@@ -6,9 +6,9 @@ import { COACHES } from "../../data/coaches";
 
 import Collaboration from "../../assets/images/collaboration.png";
 import Founder from "../../assets/images/FounderImg.png";
-import team1 from "../../assets/images/team1.png";
-import team2 from "../../assets/images/team2.png";
-import team3 from "../../assets/images/team3.png";
+import team1 from "../../assets/images/female-staff-1.png";
+import team2 from "../../assets/images/female-staff-2.png";
+import team3 from "../../assets/images/male-staff.png";
 
 const About = () => {
   const coachImages = [team1, team2, team3];

@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
-import nodemailer from "nodemailer";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -35,11 +34,8 @@ const ADMIN_PASSWORD = String(process.env.ADMIN_PASSWORD || "123456");
 const MEETING_TOKEN_TTL = process.env.MEETING_TOKEN_TTL || "30d";
 const APP_BASE_URL = String(process.env.APP_BASE_URL || "http://localhost:5173").replace(/\/+$/, "");
 const MAIL_FROM = String(process.env.MAIL_FROM || "no-reply@growtharchitect.local");
-const SMTP_HOST = String(process.env.SMTP_HOST || "").trim();
-const SMTP_PORT = Number(process.env.SMTP_PORT || 587);
-const SMTP_SECURE = String(process.env.SMTP_SECURE || "false").toLowerCase() === "true";
-const SMTP_USER = String(process.env.SMTP_USER || "").trim();
-const SMTP_PASS = String(process.env.SMTP_PASS || "").trim();
+const KEPLARS_API_KEY = String(process.env.KEPLARS_API_KEY || "").trim();
+const KEPLARS_API_BASE_URL = String(process.env.KEPLARS_API_BASE_URL || "https://api.keplars.com").replace(/\/+$/, "");
 const CONTACT_EMAIL = String(process.env.CONTACT_EMAIL || MAIL_FROM || "support@growtharchitect.com").trim();
 const RATE_LIMIT_WINDOW_MS = Number(process.env.RATE_LIMIT_WINDOW_MS || 10 * 60 * 1000);
 const RATE_LIMIT_MAX_REQUESTS = Number(process.env.RATE_LIMIT_MAX_REQUESTS || 80);
@@ -162,38 +158,51 @@ const issueMeetingToken = ({ meetingId, email, role = "client", expiresIn = MEET
   );
 };
 
-const isEmailEnabled = Boolean(SMTP_HOST && SMTP_USER && SMTP_PASS);
-let smtpTransport = null;
-
-const getSmtpTransport = () => {
-  if (!isEmailEnabled) return null;
-  if (smtpTransport) return smtpTransport;
-  smtpTransport = nodemailer.createTransport({
-    host: SMTP_HOST,
-    port: SMTP_PORT,
-    secure: SMTP_SECURE,
-    auth: {
-      user: SMTP_USER,
-      pass: SMTP_PASS,
-    },
-  });
-  return smtpTransport;
-};
+const isEmailEnabled = Boolean(KEPLARS_API_KEY);
 
 const sendEmail = async ({ to, subject, html, text, attachments }) => {
-  const transporter = getSmtpTransport();
-  if (!transporter) {
-    return { sent: false, reason: "Email is disabled. Configure SMTP env vars." };
+  if (!isEmailEnabled) {
+    return { sent: false, reason: "Email is disabled. Configure KEPLARS_API_KEY." };
   }
-  await transporter.sendMail({
-    from: MAIL_FROM,
-    to,
-    subject,
-    text,
-    html,
-    attachments: Array.isArray(attachments) ? attachments : undefined,
+
+  const recipients = Array.isArray(to) ? to.filter(Boolean) : [to].filter(Boolean);
+  const body = String(html || text || "").trim();
+  if (!recipients.length || !subject || !body) {
+    return { sent: false, reason: "Email payload is incomplete." };
+  }
+
+  const response = await fetch(`${KEPLARS_API_BASE_URL}/api/v1/send-email/async`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${KEPLARS_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      to: recipients,
+      subject,
+      body,
+    }),
   });
-  return { sent: true };
+
+  let payload = null;
+  try {
+    payload = await response.json();
+  } catch {
+    payload = null;
+  }
+
+  if (!response.ok || payload?.success === false) {
+    return {
+      sent: false,
+      reason: payload?.error || `Keplars email request failed with status ${response.status}`,
+    };
+  }
+
+  return {
+    sent: true,
+    ignoredAttachments: Array.isArray(attachments) && attachments.length > 0,
+    id: payload?.data?.id || null,
+  };
 };
 
 const buildBookingEmail = ({ name, service, duration, date, timeSlot, meetingLink, supportEmail }) => {

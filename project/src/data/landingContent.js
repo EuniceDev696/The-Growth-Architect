@@ -1,6 +1,6 @@
-import Team1 from "../assets/images/team1.png";
-import Team2 from "../assets/images/team2.png";
-import Team3 from "../assets/images/team3.png";
+import Team1 from "../assets/images/female-staff-1.png";
+import Team2 from "../assets/images/female-staff-2.png";
+import Team3 from "../assets/images/male-staff.png";
 
 export const heroContent = {
   badge: "High-Performance Strategic Advisory",

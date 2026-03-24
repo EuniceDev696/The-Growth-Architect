@@ -47,11 +47,8 @@ Required environment variables:
 
 Optional but recommended:
 
-- `SMTP_HOST`
-- `SMTP_PORT`
-- `SMTP_SECURE`
-- `SMTP_USER`
-- `SMTP_PASS`
+- `KEPLARS_API_KEY`
+- `KEPLARS_API_BASE_URL` (optional, defaults to `https://api.keplars.com`)
 - `MAIL_FROM`
 - `CONTACT_EMAIL`
 - `PAYSTACK_PUBLIC_KEY`
@@ -62,4 +59,5 @@ Optional but recommended:
 - Set `APP_BASE_URL` to your final public URL, for example `https://your-app.onrender.com`
 - Because the frontend and API are served from the same origin in production, `VITE_API_BASE_URL` does not need to be set unless you split hosting later
 - MongoDB must be reachable from the deployed server
+- Email delivery now uses the Keplars REST API with `KEPLARS_API_KEY`, not SMTP credentials
 - Client-side routes such as `/about`, `/admin/dashboard`, and `/client/dashboard` are handled by the Express SPA fallback
